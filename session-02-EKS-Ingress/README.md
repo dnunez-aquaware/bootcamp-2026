@@ -98,8 +98,8 @@ curl -s http://$ALB/echo | head -3
 - [x] AWS Load Balancer Controller en ejecución (kubectl -n kube-system get pods)
 - [x] Ingress creado con ALB (kubectl get ingress)
 - [x] Balanceo funcionando:
-  - [x] / devuelve nginx (HTTP 200)
-  - [x] /echo devuelve httpd (HTTP 200)
+- [x] / devuelve nginx (HTTP 200)
+- [x] /echo devuelve httpd (HTTP 200)
 
 ```
 Screenshots almacenadas en:
@@ -127,10 +127,12 @@ Eliminado cluster EKS
 ```
 #### Comandos de verificación:
 
+```bash 
+
 kubectl get ingress
 kubectl get svc
 eksctl get cluster --profile bootcamp
-
+```
 Resultado esperado: sin recursos
 
 ### Reflexión personal
