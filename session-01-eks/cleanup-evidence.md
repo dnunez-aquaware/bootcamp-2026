@@ -4,18 +4,18 @@
 Durante esta parte final del laboratorio eliminé todos los recursos creados en AWS para evitar costos y dejar el entorno limpio.
 
 Ejecuté los siguientes comandos:
-
+```bash
 kubectl delete svc nginx  
 kubectl delete deployment nginx  
 eksctl delete cluster --name bootcamp-dnunez-v2 --region us-east-1 --profile bootcamp  
-
+```
 ## Verificación de limpieza
 Después de la eliminación, validé que todo se haya borrado correctamente con:
-
+```bash
 eksctl get cluster --region us-east-1 --profile bootcamp  
 kubectl get svc  
 kubectl get nodes  
-
+```
 ## Resultados
 - El servicio de nginx ya no existe  
 - El deployment fue eliminado correctamente  
