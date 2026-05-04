@@ -90,15 +90,18 @@ curl -s http://$ALB/echo | head -3
 ```
 
 ### Checkpoints
-Cluster creado correctamente (kubectl get nodes)
-OIDC habilitado (aws eks describe-cluster)
-ServiceAccount con IRSA configurado (kubectl get sa -n kube-system)
-AWS Load Balancer Controller en ejecución (kubectl -n kube-system get pods)
-Ingress creado con ALB (kubectl get ingress)
-Balanceo funcionando:
-/ devuelve nginx (HTTP 200)
-/echo devuelve httpd (HTTP 200)
+```md
 
+- [x] Cluster creado correctamente (kubectl get nodes)
+- [x] OIDC habilitado (aws eks describe-cluster)
+- [x] ServiceAccount con IRSA configurado (kubectl get sa -n kube-system)
+- [x] AWS Load Balancer Controller en ejecución (kubectl -n kube-system get pods)
+- [x] Ingress creado con ALB (kubectl get ingress)
+- [x] Balanceo funcionando:
+  - [x] / devuelve nginx (HTTP 200)
+  - [x] /echo devuelve httpd (HTTP 200)
+
+```
 Screenshots almacenadas en:
 
 ```Text
@@ -112,14 +115,16 @@ screenshots/
 
 ```
 
-Cleanup Ejecutado
+### Cleanup Ejecutado
+```Text
+
 Eliminado Ingress (se destruye el ALB)
 Eliminados Services y Deployments
 Desinstalado Helm chart del controller
 Eliminado ServiceAccount IRSA
 Eliminada policy de IAM
 Eliminado cluster EKS
-
+```
 #### Comandos de verificación:
 
 kubectl get ingress
