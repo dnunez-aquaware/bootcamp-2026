@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ALB=$(kubectl get ingress bootcamp -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+ALB=$(kubectl get ingress bootcamp-dnunez -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 
 echo "Testing /"
 curl -sI "http://$ALB/" | head -1
