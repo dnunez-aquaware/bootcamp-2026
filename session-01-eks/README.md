@@ -10,7 +10,7 @@ Provisionar un clúster administrado de AWS EKS usando eksctl, desplegar una apl
 - Aplicación: nginx   
 - Exposición: Servicio Kubernetes tipo LoadBalancer  
 
-## AQUI SE USO IA
+## Esquema MENTAL ---> AQUI SE USO IA
 
 ```text
 CLUSTER KUBERNETES (Control Plane + Worker Nodes)
