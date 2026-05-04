@@ -1,6 +1,6 @@
 # Session 02 - EKS Ingress (AWS Load Balancer Controller)
 
-## Objectivo
+## Objetivo
 
 Desplegar un clúster de Amazon EKS y configurar un Application Load Balancer (ALB) utilizando el AWS Load Balancer Controller con IRSA (IAM Roles for Service Accounts).
 Exponer dos aplicaciones backend (nginx y echo/httpd) a través de un único Ingress de Kubernetes con enrutamiento basado en rutas (path-based routing).
@@ -134,6 +134,18 @@ kubectl get svc
 eksctl get cluster --profile bootcamp
 ```
 Resultado esperado: sin recursos
+### ERRORES
+```Text
+
+Error de autenticación AWS SSO / profile
+Problema
+InvalidGrantException / failed to refresh SSO token
+Causa
+Sesión de AWS SSO expirada o perfil bootcamp sin login activo.
+```
+
+#### Solución
+aws sso login --profile bootcamp
 
 ### Reflexión personal
 
