@@ -12,6 +12,7 @@ Provisionar un clúster administrado de AWS EKS usando eksctl, desplegar una apl
 
 ## AQUI SE USO IA
 
+```text
 Cluster
  ├── Control Plane
  └── Worker Nodes
@@ -30,7 +31,7 @@ Worker Node
     ├── Sandbox B
     ├── Network namespace B
     └── redis
-
+```
 
 ## Comandos ejecutados
 
@@ -73,18 +74,15 @@ Load Balancer
 Stacks de CloudFormation
 
 ## ERRORES
-Uso incorrecto de sudo
 
-Se intentó ejecutar scripts con sudo, generando errores de perfil AWS no encontrado.
-
-Error: failed to get shared config profile, bootcamp
+### Error: failed to get shared config profile, bootcamp
 
 Causa: sudo ejecuta el comando como root, el cual no tiene configuración AWS SSO.
 
 Solución: eliminar sudo y ejecutar los scripts como usuario normal.
 
 
-Error: failed to get shared config profile, bootcamp
+### Error: failed to get shared config profile, bootcamp
 
 Causa: perfil AWS SSO no configurado o sesión no iniciada.
 
@@ -93,7 +91,7 @@ Solución:
 aws configure sso --profile bootcamp
 aws sso login --profile bootcamp
 
-Error: ResourceInUseException / CloudFormation stack in ROLLBACK_COMPLETE state / cluster already exists
+###Error: ResourceInUseException / CloudFormation stack in ROLLBACK_COMPLETE state / cluster already exists
 
 Causa:
 Se intentó crear el cluster, pero el proceso anterior falló debido a la falta de herramientas instaladas. Esto dejó recursos parcialmente creados en AWS (CloudFormation stacks, VPC, IAM roles). Al reintentar la creación con el mismo nombre, AWS detectó recursos residuales en conflicto.
