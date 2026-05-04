@@ -13,24 +13,55 @@ Provisionar un clúster administrado de AWS EKS usando eksctl, desplegar una apl
 ## AQUI SE USO IA
 
 ```text
-Cluster
- ├── Control Plane
- └── Worker Nodes
-      └── Pods
-           └── Containers
+CLUSTER KUBERNETES (Control Plane + Worker Nodes)
 
--------WORKER NODE---------
-Worker Node
-├── Pod A
-│   ├── Sandbox A
-│   ├── Network namespace A
-│   ├── nginx
-│   └── logger
+Cluster
+├── Control Plane
+│   ├── API Server
+│   │   → Punto de entrada (recibe kubectl / YAML)
+│   │
+│   ├── Controller Manager
+│   │   → Mantiene el estado deseado del cluster
+│   │
+│   ├── Scheduler
+│   │   → Decide en qué Worker Node se ejecutan los Pods
+│   │
+│   └── etcd
+│       → Base de datos del estado del cluster
 │
-└── Pod B
-    ├── Sandbox B
-    ├── Network namespace B
-    └── redis
+└── Worker Nodes
+    ├── kubelet
+    │   → Agente que ejecuta y mantiene los Pods
+    │
+    ├── kube-proxy
+    │   → Maneja la red y permite comunicación entre Pods y Services
+    │
+    ├── Pods
+    │   ├── Pod A
+    │   │   ├── Sandbox (runtime del contenedor)
+    │   │   ├── Network Namespace
+    │   │   ├── Container: nginx
+    │   │   └── Container: logger
+    │   │
+    │   └── Pod B
+    │       ├── Sandbox
+    │       ├── Network Namespace
+    │       └── Container: redis
+    │
+    └── Services (abstracción de red)
+        ├── ClusterIP (interno al cluster)
+        ├── NodePort (expone en el nodo)
+        └── LoadBalancer (expone a Internet vía AWS ELB)
+
+---
+
+FLUJO MENTAL:
+
+kubectl → API Server → Controller Manager → Scheduler → kubelet → Pods
+                                                    ↓
+                                              kube-proxy
+                                                    ↓
+                                              Services → acceso a Pods
 ```
 
 ## Comandos ejecutados
@@ -91,7 +122,7 @@ Solución:
 aws configure sso --profile bootcamp
 aws sso login --profile bootcamp
 
-###Error: ResourceInUseException / CloudFormation stack in ROLLBACK_COMPLETE state / cluster already exists
+### Error: ResourceInUseException / CloudFormation stack in ROLLBACK_COMPLETE state / cluster already exists
 
 Causa:
 Se intentó crear el cluster, pero el proceso anterior falló debido a la falta de herramientas instaladas. Esto dejó recursos parcialmente creados en AWS (CloudFormation stacks, VPC, IAM roles). Al reintentar la creación con el mismo nombre, AWS detectó recursos residuales en conflicto.
@@ -100,6 +131,8 @@ Solución:
 Se identificaron y eliminaron los recursos residuales en AWS antes de volver a ejecutar el cluster
 
 ## Checklist de limpieza (EKS)
+
+```text
 
 ✔ EKS cluster eliminado
 ✔ Managed node group eliminado
@@ -110,7 +143,10 @@ Se identificaron y eliminaron los recursos residuales en AWS antes de volver a e
 ✔ EBS volumes eliminados
 ✔ VPC y subnets eliminadas
 
-Reflexión personal
+```
+
+
+## Reflexión personal
 
 En esta sesión aprendí cómo AWS EKS automatiza la creación de clústeres de Kubernetes con eksctl. Entendí cómo se organizan los componentes como pods, nodos y servicios. También comprendí el flujo básico del API Server y cómo Kubernetes decide qué ejecutar en el clúster.
 Lo más difícil fue esperar la provisión del clúster y validar el acceso externo al LoadBalancer.
